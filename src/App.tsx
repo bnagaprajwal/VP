@@ -115,12 +115,27 @@ function App() {
 
       {/* Dropdown Content on Main Page */}
       {(featuresOpen || developerOpen) && (
-        <div className="px-6 lg:px-8 mt-6">
-          <div className={`rounded-2xl shadow-lg border p-8 transition-colors duration-300 ${
+        <div className="fixed top-24 left-6 right-6 z-50 px-0 lg:px-2">
+          <div className={`rounded-2xl shadow-2xl border p-8 transition-all duration-300 transform ${
             isDarkMode 
               ? 'bg-gray-800 border-gray-700' 
               : 'bg-white border-gray-100'
-          }`}>
+          } animate-in slide-in-from-top-4`}>
+            {/* Close button */}
+            <button 
+              onClick={() => {
+                setFeaturesOpen(false);
+                setDeveloperOpen(false);
+              }}
+              className={`absolute top-4 right-4 p-2 rounded-full transition-colors duration-300 ${
+                isDarkMode 
+                  ? 'text-gray-400 hover:text-white hover:bg-gray-700' 
+                  : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+              }`}
+            >
+              <X size={20} />
+            </button>
+            
             {featuresOpen && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Buy Card */}
@@ -291,6 +306,17 @@ function App() {
             )}
           </div>
         </div>
+      )}
+
+      {/* Backdrop overlay */}
+      {(featuresOpen || developerOpen) && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => {
+            setFeaturesOpen(false);
+            setDeveloperOpen(false);
+          }}
+        />
       )}
 
       {/* Main Content */}
