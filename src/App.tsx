@@ -303,8 +303,7 @@ function App() {
             </div>
           )}
         </header>
-            </div>
-          </div>
+      </div>
 
       {/* Main Content */}
       <main className="flex flex-col items-center justify-center px-6 py-16 lg:py-24">
