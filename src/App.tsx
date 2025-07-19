@@ -29,11 +29,11 @@ function App() {
     }`}>
 
       {/* Header */}
-      <div className="relative z-50">
-        <header className={`flex items-center justify-between px-6 lg:px-8 py-4 shadow-sm border-b transition-colors duration-300 ${
+      <div className="px-6 lg:px-8 pt-6 relative z-50">
+        <header className={`flex items-center justify-between px-6 py-4 rounded-2xl shadow-sm border transition-colors duration-300 ${
           isDarkMode 
             ? 'bg-gray-800 border-gray-700' 
-            : 'bg-white border-gray-200'
+            : 'bg-white border-gray-100'
         }`}>
         {/* Left side - Logo and Navigation */}
         <div className="flex items-center space-x-8">
