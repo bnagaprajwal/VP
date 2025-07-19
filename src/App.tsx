@@ -7,20 +7,6 @@ function App() {
   const [featuresOpen, setFeaturesOpen] = useState(false);
   const [developerOpen, setDeveloperOpen] = useState(false);
 
-  // Prevent body scroll when dropdown is open
-  React.useEffect(() => {
-    if (featuresOpen || developerOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    
-    // Cleanup on unmount
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [featuresOpen, developerOpen]);
-
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -43,28 +29,101 @@ function App() {
     }`}>
 
       {/* Header */}
-      <div className={`px-6 lg:px-8 pt-6 relative z-50 ${
-        (featuresOpen || developerOpen) ? 'fixed inset-0 overflow-y-auto' : ''
-      }`}>
-        <header className={`px-6 py-4 shadow-sm border transition-all duration-300 ${
-          (featuresOpen || developerOpen) 
-            ? `${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'} rounded-t-2xl` 
-            : `${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'} rounded-2xl`
-        }`}>
-          {/* Dropdown Content - Inside Header */}
-          {(featuresOpen || developerOpen) && (
-            <div className={`fixed inset-0 ${
+      <div className="px-6 lg:px-8 pt-6 relative z-50">
+        <header className={`px-6 py-4 rounded-2xl shadow-sm border transition-all duration-300 ${
           isDarkMode 
             ? 'bg-gray-800 border-gray-700' 
             : 'bg-white border-gray-100'
-            } pt-20 px-6 pb-6 overflow-y-auto`}>
+        }`}>
+          {/* Top Header Bar */}
+          <div className="flex items-center justify-between">
+            {/* Left side - Logo and Navigation */}
+            <div className="flex items-center space-x-8">
+              {/* Logo */}
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <div className="w-5 h-5 bg-white rounded-sm"></div>
+                </div>
+                <span className={`text-xl font-bold transition-colors duration-300 ${
+                  isDarkMode ? 'text-white' : 'text-gray-900'
+                }`}>MetaMask</span>
+              </div>
+
+              {/* Navigation */}
+              <nav className="hidden md:flex items-center space-x-8">
+                {/* Features Dropdown */}
+                <div className="relative">
+                  <button 
+                    onClick={toggleFeatures}
+                    className={`flex items-center space-x-1 font-medium transition-colors duration-300 hover:opacity-70 ${
+                      isDarkMode 
+                        ? 'text-gray-300' 
+                        : 'text-gray-700'
+                    }`}
+                  >
+                    <span>Features</span>
+                    <ChevronDown size={16} className={`transition-transform duration-200 ${featuresOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
+
+                {/* Developer Dropdown */}
+                <div className="relative">
+                  <button 
+                    onClick={toggleDeveloper}
+                    className={`flex items-center space-x-1 font-medium transition-colors duration-300 hover:opacity-70 ${
+                      isDarkMode 
+                        ? 'text-gray-300' 
+                        : 'text-gray-700'
+                    }`}
+                  >
+                    <span>Developer</span>
+                    <ChevronDown size={16} className={`transition-transform duration-200 ${developerOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
+
+                {/* Cryptocurrencies Link */}
+                <a href="#" className={`font-medium transition-colors duration-300 hover:opacity-70 ${
+                  isDarkMode 
+                    ? 'text-gray-300' 
+                    : 'text-gray-700'
+                }`}>
+                  Cryptocurrencies
+                </a>
+              </nav>
+            </div>
+
+            {/* Right side */}
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={toggleDarkMode}
+                className={`p-2 transition-colors duration-300 ${
+                  isDarkMode 
+                    ? 'text-gray-300 hover:text-white' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <Moon size={20} />
+              </button>
+              <button className={`px-6 py-2 rounded-full font-medium transition-colors duration-300 ${
+                isDarkMode 
+                  ? 'bg-white text-black hover:bg-gray-200' 
+                  : 'bg-black text-white hover:bg-gray-800'
+              }`}>
+                VIEW METAMASK WEB
+              </button>
+            </div>
+          </div>
+
+          {/* Dropdown Content - Inside Header */}
+          {(featuresOpen || developerOpen) && (
+            <div className="mt-6 pb-2">
               {/* Close button */}
               <button 
                 onClick={() => {
                   setFeaturesOpen(false);
                   setDeveloperOpen(false);
                 }}
-                className={`fixed top-6 right-6 p-2 rounded-full transition-colors duration-300 z-60 ${
+                className={`absolute top-6 right-6 p-2 rounded-full transition-colors duration-300 ${
                   isDarkMode 
                     ? 'text-gray-400 hover:text-white hover:bg-gray-700' 
                     : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
@@ -74,7 +133,7 @@ function App() {
               </button>
               
               {featuresOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {/* Buy Card */}
                   <div className="group bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl p-6 text-white relative overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer">
                     <div className="relative z-10">
@@ -175,7 +234,7 @@ function App() {
               )}
 
               {developerOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Documentation Card */}
                   <div className="group bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl p-8 text-white relative overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer">
                     <div className="relative z-10">
@@ -243,92 +302,11 @@ function App() {
               )}
             </div>
           )}
-
-          {/* Top Header Bar */}
-          <div className="flex items-center justify-between">
-            {/* Left side - Logo and Navigation */}
-            <div className="flex items-center space-x-8">
-              {/* Logo */}
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
-                  <div className="w-5 h-5 bg-white rounded-sm"></div>
-                </div>
-                <span className={`text-xl font-bold transition-colors duration-300 ${
-                  isDarkMode ? 'text-white' : 'text-gray-900'
-                }`}>MetaMask</span>
-              </div>
-
-              {/* Navigation */}
-              <nav className="hidden md:flex items-center space-x-8">
-                {/* Features Dropdown */}
-                <div className="relative">
-                  <button 
-                    onClick={toggleFeatures}
-                    className={`flex items-center space-x-1 font-medium transition-colors duration-300 hover:opacity-70 ${
-                      isDarkMode 
-                        ? 'text-gray-300' 
-                        : 'text-gray-700'
-                    }`}
-                  >
-                    <span>Features</span>
-                    <ChevronDown size={16} className={`transition-transform duration-200 ${featuresOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                </div>
-
-                {/* Developer Dropdown */}
-                <div className="relative">
-                  <button 
-                    onClick={toggleDeveloper}
-                    className={`flex items-center space-x-1 font-medium transition-colors duration-300 hover:opacity-70 ${
-                      isDarkMode 
-                        ? 'text-gray-300' 
-                        : 'text-gray-700'
-                    }`}
-                  >
-                    <span>Developer</span>
-                    <ChevronDown size={16} className={`transition-transform duration-200 ${developerOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                </div>
-
-                {/* Cryptocurrencies Link */}
-                <a href="#" className={`font-medium transition-colors duration-300 hover:opacity-70 ${
-                  isDarkMode 
-                    ? 'text-gray-300' 
-                    : 'text-gray-700'
-                }`}>
-                  Cryptocurrencies
-                </a>
-              </nav>
-            </div>
-
-            {/* Right side */}
-            <div className="flex items-center space-x-4">
-              <button 
-                onClick={toggleDarkMode}
-                className={`p-2 transition-colors duration-300 ${
-                  isDarkMode 
-                    ? 'text-gray-300 hover:text-white' 
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                <Moon size={20} />
-              </button>
-              <button className={`px-6 py-2 rounded-full font-medium transition-colors duration-300 ${
-                isDarkMode 
-                  ? 'bg-white text-black hover:bg-gray-200' 
-                  : 'bg-black text-white hover:bg-gray-800'
-              }`}>
-                VIEW METAMASK WEB
-              </button>
-            </div>
-          </div>
         </header>
       </div>
 
       {/* Main Content */}
-      <main className={`flex flex-col items-center justify-center px-6 py-16 lg:py-24 ${
-        (featuresOpen || developerOpen) ? 'hidden' : ''
-      }`}>
+      <main className="flex flex-col items-center justify-center px-6 py-16 lg:py-24">
         {/* Hero Text */}
         <div className="text-center mb-16">
           <h1 className={`metamask-font text-6xl lg:text-8xl xl:text-9xl leading-none tracking-tight transition-colors duration-300 ${
@@ -364,9 +342,7 @@ function App() {
       </main>
 
       {/* Info Icon */}
-      <div className={`fixed bottom-8 right-8 ${
-        (featuresOpen || developerOpen) ? 'hidden' : ''
-      }`}>
+      <div className="fixed bottom-8 right-8">
         <button className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ${
           isDarkMode 
             ? 'bg-white text-black hover:bg-gray-200' 
@@ -378,8 +354,6 @@ function App() {
 
       {/* Mobile Navigation */}
       <div className={`md:hidden fixed bottom-0 left-0 right-0 border-t p-4 transition-colors duration-300 ${
-        (featuresOpen || developerOpen) ? 'hidden' : ''
-      } ${
         isDarkMode 
           ? 'bg-gray-800 border-gray-700' 
           : 'bg-white border-gray-200'
