@@ -114,7 +114,7 @@ function App() {
 
         {/* Dropdown Content - Integrated with Header */}
         {(featuresOpen || developerOpen) && (
-          <div className="mt-4">
+          <div className="absolute top-full left-0 right-0 mt-4 z-50">
             <div className={`rounded-2xl shadow-2xl border p-8 transition-all duration-300 transform ${
               isDarkMode 
                 ? 'bg-gray-800 border-gray-700' 
@@ -126,7 +126,7 @@ function App() {
                   setFeaturesOpen(false);
                   setDeveloperOpen(false);
                 }}
-                className={`absolute top-4 right-4 p-2 rounded-full transition-colors duration-300 ${
+                className={`absolute top-6 right-6 p-2 rounded-full transition-colors duration-300 ${
                   isDarkMode 
                     ? 'text-gray-400 hover:text-white hover:bg-gray-700' 
                     : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
