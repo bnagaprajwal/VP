@@ -114,7 +114,7 @@ function App() {
 
         {/* Dropdown Content - Integrated with Header */}
         {(featuresOpen || developerOpen) && (
-          <div className="absolute top-full left-0 right-0 mt-4 z-50">
+          <div className="absolute top-full left-0 right-0 mt-4 z-50 px-6 lg:px-8">
             <div className={`rounded-2xl shadow-2xl border p-8 transition-all duration-300 transform ${
               isDarkMode 
                 ? 'bg-gray-800 border-gray-700' 
