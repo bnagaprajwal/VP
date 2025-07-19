@@ -30,96 +30,93 @@ function App() {
 
       {/* Header */}
       <div className="px-6 lg:px-8 pt-6 relative z-50">
-        <header className={`flex items-center justify-between px-6 py-4 rounded-2xl shadow-sm border transition-colors duration-300 ${
+        <header className={`px-6 py-4 rounded-2xl shadow-sm border transition-all duration-300 ${
           isDarkMode 
             ? 'bg-gray-800 border-gray-700' 
             : 'bg-white border-gray-100'
         }`}>
-        {/* Left side - Logo and Navigation */}
-        <div className="flex items-center space-x-8">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
-              <div className="w-5 h-5 bg-white rounded-sm"></div>
+          {/* Top Header Bar */}
+          <div className="flex items-center justify-between">
+            {/* Left side - Logo and Navigation */}
+            <div className="flex items-center space-x-8">
+              {/* Logo */}
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <div className="w-5 h-5 bg-white rounded-sm"></div>
+                </div>
+                <span className={`text-xl font-bold transition-colors duration-300 ${
+                  isDarkMode ? 'text-white' : 'text-gray-900'
+                }`}>MetaMask</span>
+              </div>
+
+              {/* Navigation */}
+              <nav className="hidden md:flex items-center space-x-8">
+                {/* Features Dropdown */}
+                <div className="relative">
+                  <button 
+                    onClick={toggleFeatures}
+                    className={`flex items-center space-x-1 font-medium transition-colors duration-300 hover:opacity-70 ${
+                      isDarkMode 
+                        ? 'text-gray-300' 
+                        : 'text-gray-700'
+                    }`}
+                  >
+                    <span>Features</span>
+                    <ChevronDown size={16} className={`transition-transform duration-200 ${featuresOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
+
+                {/* Developer Dropdown */}
+                <div className="relative">
+                  <button 
+                    onClick={toggleDeveloper}
+                    className={`flex items-center space-x-1 font-medium transition-colors duration-300 hover:opacity-70 ${
+                      isDarkMode 
+                        ? 'text-gray-300' 
+                        : 'text-gray-700'
+                    }`}
+                  >
+                    <span>Developer</span>
+                    <ChevronDown size={16} className={`transition-transform duration-200 ${developerOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
+
+                {/* Cryptocurrencies Link */}
+                <a href="#" className={`font-medium transition-colors duration-300 hover:opacity-70 ${
+                  isDarkMode 
+                    ? 'text-gray-300' 
+                    : 'text-gray-700'
+                }`}>
+                  Cryptocurrencies
+                </a>
+              </nav>
             </div>
-            <span className={`text-xl font-bold transition-colors duration-300 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
-            }`}>MetaMask</span>
+
+            {/* Right side */}
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={toggleDarkMode}
+                className={`p-2 transition-colors duration-300 ${
+                  isDarkMode 
+                    ? 'text-gray-300 hover:text-white' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <Moon size={20} />
+              </button>
+              <button className={`px-6 py-2 rounded-full font-medium transition-colors duration-300 ${
+                isDarkMode 
+                  ? 'bg-white text-black hover:bg-gray-200' 
+                  : 'bg-black text-white hover:bg-gray-800'
+              }`}>
+                VIEW METAMASK WEB
+              </button>
+            </div>
           </div>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {/* Features Dropdown */}
-            <div className="relative">
-              <button 
-                onClick={toggleFeatures}
-                className={`flex items-center space-x-1 font-medium transition-colors duration-300 hover:opacity-70 ${
-                  isDarkMode 
-                    ? 'text-gray-300' 
-                    : 'text-gray-700'
-                }`}
-              >
-                <span>Features</span>
-                <ChevronDown size={16} className={`transition-transform duration-200 ${featuresOpen ? 'rotate-180' : ''}`} />
-              </button>
-            </div>
-
-            {/* Developer Dropdown */}
-            <div className="relative">
-              <button 
-                onClick={toggleDeveloper}
-                className={`flex items-center space-x-1 font-medium transition-colors duration-300 hover:opacity-70 ${
-                  isDarkMode 
-                    ? 'text-gray-300' 
-                    : 'text-gray-700'
-                }`}
-              >
-                <span>Developer</span>
-                <ChevronDown size={16} className={`transition-transform duration-200 ${developerOpen ? 'rotate-180' : ''}`} />
-              </button>
-            </div>
-
-            {/* Cryptocurrencies Link */}
-            <a href="#" className={`font-medium transition-colors duration-300 hover:opacity-70 ${
-              isDarkMode 
-                ? 'text-gray-300' 
-                : 'text-gray-700'
-            }`}>
-              Cryptocurrencies
-            </a>
-          </nav>
-        </div>
-
-        {/* Right side */}
-        <div className="flex items-center space-x-4">
-          <button 
-            onClick={toggleDarkMode}
-            className={`p-2 transition-colors duration-300 ${
-              isDarkMode 
-                ? 'text-gray-300 hover:text-white' 
-                : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            <Moon size={20} />
-          </button>
-          <button className={`px-6 py-2 rounded-full font-medium transition-colors duration-300 ${
-            isDarkMode 
-              ? 'bg-white text-black hover:bg-gray-200' 
-              : 'bg-black text-white hover:bg-gray-800'
-          }`}>
-            VIEW METAMASK WEB
-          </button>
-        </div>
-        </header>
-
-        {/* Dropdown Content - Integrated with Header */}
-        {(featuresOpen || developerOpen) && (
-          <div className="absolute top-full left-0 right-0 mt-4 z-50 px-6 lg:px-8">
-            <div className={`rounded-2xl shadow-2xl border p-8 transition-all duration-300 transform ${
-              isDarkMode 
-                ? 'bg-gray-800 border-gray-700' 
-                : 'bg-white border-gray-100'
-            } animate-in slide-in-from-top-4`}>
+          {/* Dropdown Content - Inside Header */}
+          {(featuresOpen || developerOpen) && (
+            <div className="mt-6 pb-2">
               {/* Close button */}
               <button 
                 onClick={() => {
@@ -304,9 +301,10 @@ function App() {
                 </div>
               )}
             </div>
+          )}
+        </header>
+            </div>
           </div>
-        )}
-      </div>
 
       {/* Main Content */}
       <main className="flex flex-col items-center justify-center px-6 py-16 lg:py-24">
